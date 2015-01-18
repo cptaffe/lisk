@@ -1,3 +1,6 @@
 [submodule "chan"]
 	path = chan
 	url = git@github.com:cptaffe/chan
+[submodule "lex"]
+	path = lex
+	url = git@github.com:cptaffe/lex
