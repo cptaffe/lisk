@@ -3,23 +3,47 @@
 // This program is free software licensed under the MIT license.
 
 #include <stdio.h>
+#include <stdint.h>
+#include <pthread.h>
 
-#include "ds/chan.h"
+#include "chan/chan.h"
 
-int main() {
-	chan *ch = make_chan();
-	if (!ch) { return 1; }
+void *test_chan_get(void *v) {
+	chan *ch = (chan *) v;
+
+	void *i;
+	while ((i = chan_get(ch))) {
+		printf("got: %d\n", (int) i);
+	}
+
+	return NULL;
+}
+
+void *test_chan_put(void *v) {
+	chan *ch = (chan *) v;
 
 	int arr[100];
 	for (int i = 0; i < 100; i++) {
 		arr[i] = i + 1;
-		chan_put(ch, &arr[i]);
+		chan_put(ch, (void *) (intptr_t) arr[i]);
 	}
 
-	void *i;
-	while ((i = chan_get(ch))) {
-		printf("got: %d\n", *((int *) i));
-	}
+	chan_kill(ch);
+
+	return NULL;
+}
+
+int main() {
+
+	chan *ch = make_chan();
+	if (!ch) { return 1; }
+
+	pthread_t thread[2];
+
+	pthread_create(&thread[0], NULL, &test_chan_put, (void *) ch);
+	pthread_create(&thread[1], NULL, &test_chan_get, (void *) ch);
+
+	for (int i = 0; i < 2; i++) { pthread_join(thread[i], NULL); }
 
 	free_chan(ch);
 }
