@@ -1,5 +1,5 @@
 
-// Copyright 2012 Connor Taffe <cpaynetaffe@gmail.com>
+// Copyright 2015 Connor Taffe <cpaynetaffe@gmail.com>
 // This program is free software licensed under the MIT license.
 
 #ifndef CHAN_H_

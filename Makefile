@@ -1,12 +1,12 @@
 
 CFLAGS = --std=c99
 
-SRC = list.c chan.c main.c
-OBJ = $(SRC:.c=.o)
+LIB = ds/ds.a
 
-BIN = lisk
+lisk: $(LIB) main.o
+	$(CC) $(CFLAGS) -o lisk main.o $(LIB)
 
-$(BIN): $(OBJ)
-	$(CC) $(CFLAGS) -o $(BIN) $(OBJ)
+main.o: ds/chan.h
 
-$(OBJ): $(HDR)
+$(LIB):
+	$(MAKE) -C $(dir $(LIB))
