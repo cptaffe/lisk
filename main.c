@@ -4,7 +4,7 @@
 
 #include <stdio.h>
 
-#include "chan.h"
+#include "ds/chan.h"
 
 int main() {
 	chan *ch = make_chan();

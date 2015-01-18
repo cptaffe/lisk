@@ -5,7 +5,10 @@
 # This makefile generates a static library,
 # this library contains all the data structures used.
 
-OBJ = chan.o list.o
+CFLAGS += -I$(INCLUDE)
+
+SRC = chan.c list.c
+OBJ = $(SRC:.c=.o)
 LIB = ds.a
 
 $(LIB): $(OBJ)
@@ -13,7 +16,10 @@ $(LIB): $(OBJ)
 
 
 $(OBJ):
-	$(CC) $(CFLAGS) -c $<
+	$(CC) $(CFLAGS) -c $(SRC)
 
 chan.o: chan.h list.h
 list.o: list.h
+
+clean:
+	$(RM) $(OBJ) $(LIB)
