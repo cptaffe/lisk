@@ -7,7 +7,7 @@ CFLAGS = -g --std=c99
 OBJ = main.o
 BIN = lisk
 
-LIB = chan/chan.a
+LIB = chan/chan.a lex/lex.a
 
 lisk: $(LIB) $(OBJ)
 	$(CC) $(CFLAGS) -o $(BIN) $(OBJ) $(LIB)
@@ -15,8 +15,9 @@ lisk: $(LIB) $(OBJ)
 main.o: chan/chan.h
 
 $(LIB):
-	$(MAKE) INCLUDE=. -C $(dir $(LIB))
+	# making library submodules
+	$(foreach lib,$(dir $(LIB)), $(MAKE) --directory=$(lib);)
 
 clean:
-	rm -rf $(OBJ) $(BIN) # remove obj & bins
-	$(MAKE) -C $(dir $(LIB)) clean # clean libs
+	$(RM) $(OBJ) $(BIN) # remove obj & bins
+	$(foreach lib,$(dir $(LIB)), $(MAKE) --directory=$(lib) clean;)
