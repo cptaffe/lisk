@@ -5,9 +5,18 @@
 #ifndef LISK_PARSE_H_
 #define LISK_PARSE_H_
 
-// parser
+#include "lex.h"
+
+// parser structure
 typedef struct {
+	chan *chan;
 	tree *tree;
+	lexer *lex;
 } parser;
+
+parser *make_parser();
+void free_parser(parser *p);
+
+tree *parser_get();
 
 #endif // LISK_PARSE_H_

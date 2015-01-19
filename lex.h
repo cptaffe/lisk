@@ -5,16 +5,19 @@
 #ifndef LISK_LEX_H_
 #define LISK_LEX_H_
 
+#include <stdio.h>
+
 #include "chan/chan.h"
 #include "lex/lex.h"
 #include "tok.h"
 
 typedef struct {
 	lex *lex;
+	chan *chan;
 	int paren_depth;
 } lexer;
 
-lexer *make_lexer();
+lexer *make_lexer(FILE *file);
 void free_lexer(lexer *l);
 
 // starts lex thread.
